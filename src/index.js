@@ -57,16 +57,17 @@ for (let column = 0; column < COLUMNS; column += 1) {
             .createChartXY({
                 columnIndex: column,
                 rowIndex: row + 1,
+                legend: { addEntriesAutomatically: false, visible: false },
             })
             .setTitleFillStyle(emptyFill)
             .setTitleMargin({ top: 0, bottom: 0 })
             .setPadding(0)
             .setUserInteractions(undefined)
-            .setCursor((autoCursor) => autoCursor.setTickMarkerXVisible(false).setTickMarkerYVisible(false).setAutoFitStrategy(undefined))
+            .setCursor((autoCursor) => autoCursor.setTickMarkerXVisible(false).setTickMarkerYVisible(false))
         const axisX = chart
             .getDefaultAxisX()
             .setTickStrategy(AxisTickStrategies.Empty)
-            .setScrollStrategy(AxisScrollStrategies.progressive)
+            .setScrollStrategy(AxisScrollStrategies.scrolling)
             .setDefaultInterval((state) => ({ end: state.dataMax, start: (state.dataMax ?? 0) - HISTORYMS, stopAxisAfter: false }))
             .setStrokeStyle(emptyLine)
             .setAnimationScroll(false)
@@ -111,14 +112,16 @@ if (!showFullDashboard) {
 
 const seriesList = chartList.map((chart, i) => {
     const series = chart
-        .addPointLineAreaSeries({
-            dataPattern: 'ProgressiveX',
+        .addLineSeries({
             // Pass custom supplied index for automatic series coloring.
             automaticColorIndex: i,
+            schema: {
+                x: { auto: true },
+                yValues: { pattern: null },
+            },
         })
         .setName(`Channel ${i + 1}`)
         .setStrokeStyle((stroke) => stroke.setThickness(1))
-        .setAreaFillStyle(emptyFill)
         .setMaxSampleCount(HISTORYMS)
         .setEffect(false)
     return series
