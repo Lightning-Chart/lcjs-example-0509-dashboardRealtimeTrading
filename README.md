@@ -25,7 +25,7 @@ By default, this example will show a small dashboard that displays nine real-tim
 
 **However**, the real treat is activated by pressing the "Click here to show full 10x10 dashboard" button inside the chart. This is intended for Desktop users, as the complete application requires quite a bit of space.
 
-![](./assets/show-full.png 'Show full 10x10 Dashboard example')
+![Show full dashboard](./assets/show-full.png 'Show full 10x10 Dashboard example')
 
 In its full size, the example shows 100 line charts. Each chart is connected to a real-time data source (random data), the sampling rate is 1 000 data points per second **for every chart**. This sums up to **100 000** processed data points per second.
 
